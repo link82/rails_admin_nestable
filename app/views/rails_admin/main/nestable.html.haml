@@ -5,6 +5,17 @@
         %label
           = check_box_tag 'rails_admin_nestable_live_update'
           = t('admin.actions.nestable.live_update')
+  - if @select_options
+
+    .form-group
+      %select#nestable_filter.input-group.filtering-select{ name: 'parent_id'}
+        %option{value:''}
+          | Tutto
+        
+        - @select_options.each do |opt|
+          %option{value: opt[0], selected: @parent_id.to_s == opt[0].to_s}
+            = opt[1]
+
   .form-group
     #tree_nodes.dd{ data: { update_path: nestable_path(model_name: @abstract_model), max_depth: tree_max_depth } }
       %ol.dd-list
@@ -16,3 +27,9 @@
 = stylesheet_link_tag    'rails_admin/rails_admin_nestable'
 = javascript_include_tag 'rails_admin/jquery.nestable'
 = javascript_include_tag 'rails_admin/rails_admin_nestable'
+
+:javascript
+  jQuery('#nestable_filter').on('change', function() {
+    console.log('changed option');
+    document.location.href = "#{nestable_path(model_name: @abstract_model)}&parent_id=" + jQuery(this).val();
+  });
