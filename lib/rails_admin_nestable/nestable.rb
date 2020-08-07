@@ -76,10 +76,10 @@ module RailsAdmin
             if request.get?
               
               query = list_entries(@model_config, :nestable, false, false).reorder(nil)
-              if !params[:parent_id].blank?
-                @parent_id = params[:parent_id]
-                query = query.nestable_children_of(@parent_id) 
-              end
+              
+              @parent_id = params[:parent_id]
+              query = query.nestable_children_of(@parent_id) 
+              
 
               case @options[:scope].class.to_s
                 when 'Proc'

@@ -8,10 +8,7 @@
   - if @select_options
 
     .form-group
-      %select#nestable_filter.input-group.filtering-select{ name: 'parent_id'}
-        %option{value:''}
-          | Tutto
-        
+      %select#nestable_filter.input-group.filtering-select{ name: 'parent_id'}      
         - @select_options.each do |opt|
           %option{value: opt[0], selected: @parent_id.to_s == opt[0].to_s}
             = opt[1]
