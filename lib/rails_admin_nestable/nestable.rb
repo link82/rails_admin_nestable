@@ -77,8 +77,10 @@ module RailsAdmin
               
               query = list_entries(@model_config, :nestable, false, false).reorder(nil)
               
-              @parent_id = params[:parent_id]
-              query = query.nestable_children_of(@parent_id) 
+              if @abstract_model.model.respond_to?(:nestable_filters)
+                @parent_id = params[:parent_id]
+                query = query.nestable_children_of(@parent_id)
+              end
               
 
               case @options[:scope].class.to_s
